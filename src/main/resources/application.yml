@@ -1,0 +1,17 @@
+datastax-java-driver:
+  basic:
+    contact-points: 127.0.0.1:9042
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:29093
+    consumer:
+      group-id: telemetry-consumer
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual_immediate
+
+topic-to-consume-message: notification-topic
+
+bot:
+  token: 7614249328:AAF6MqQGmFFP489uv4nF6nwHsxz4gTObouQ
