@@ -23,16 +23,12 @@ public class KafkaConsumerService {
   public void consumeMessage(String message, Acknowledgment acknowledgment) {
     try {
       KafkaMessage kafkaMessage = objectMapper.readValue(message, KafkaMessage.class);
+      NotificationDto notificationDto = objectMapper.readValue(kafkaMessage.getMessage(), NotificationDto.class);
 
       switch (kafkaMessage.getCommand()) {
-        case HIGH_TEMPERATURE -> {
-          NotificationDto notificationDto = objectMapper.readValue(kafkaMessage.getMessage(), NotificationDto.class);
-          ioTServiceBot.sendHighTempNotification(notificationDto);
-        }
-        case LOW_TEMPERATURE -> {
-          NotificationDto notificationDto = objectMapper.readValue(kafkaMessage.getMessage(), NotificationDto.class);
-          ioTServiceBot.sendLowerTempNotification(notificationDto);
-        }
+        case HIGH_TEMPERATURE -> ioTServiceBot.sendHighTempNotification(notificationDto);
+        case LOW_TEMPERATURE -> ioTServiceBot.sendLowerTempNotification(notificationDto);
+        case EQUAL_TEMPERATURE -> ioTServiceBot.sendEqualTempNotification(notificationDto);
         default -> LOGGER.error("Not valid command in request");
       }
 

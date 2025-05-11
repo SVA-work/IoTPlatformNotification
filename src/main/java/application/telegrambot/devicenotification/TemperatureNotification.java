@@ -14,4 +14,9 @@ public class TemperatureNotification {
         String response = "Температура на вашем устройсте \"%s\" типа \"%s\" поднялась выше %s";
         return String.format(response, deviceToken, deviceType, highBorderOfTemperature);
     }
+
+    public String equalTempNotification(String deviceToken, String deviceType, String borderOfTemperature) {
+        String response = "Температура на вашем устройсте \"%s\" типа \"%s\" равна %s";
+        return String.format(response, deviceToken, deviceType, borderOfTemperature);
+    }
 }

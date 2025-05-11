@@ -39,9 +39,9 @@ public class IoTServiceBot extends TelegramLongPollingBot {
 
     private void startCommand(Long chatId, String userName) {
         var text = """
-                Добро пожаловать в бот, %s!
-                Иcпользуйте этот телеграм токен при регистрации: %d
-                """;
+            Добро пожаловать в бот, %s!
+            Иcпользуйте этот телеграм токен при регистрации: %d
+            """;
         var formattedText = String.format(text, userName, chatId);
         String chatIdStr = String.valueOf(chatId);
         sendMessage(chatIdStr, formattedText);
@@ -56,7 +56,15 @@ public class IoTServiceBot extends TelegramLongPollingBot {
     }
 
     public void sendHighTempNotification(NotificationDto notificationDto) {
-        String message = TEMPERATURE_NOTIFICATION.lowerTempNotification(
+        String message = TEMPERATURE_NOTIFICATION.highTempNotification(
+            notificationDto.getDeviceToken(),
+            notificationDto.getDeviceType(),
+            notificationDto.getValue());
+        sendMessage(notificationDto.getChatId(), message);
+    }
+
+    public void sendEqualTempNotification(NotificationDto notificationDto) {
+        String message = TEMPERATURE_NOTIFICATION.equalTempNotification(
             notificationDto.getDeviceToken(),
             notificationDto.getDeviceType(),
             notificationDto.getValue());
