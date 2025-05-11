@@ -29,11 +29,9 @@ public class IoTServiceBot extends TelegramLongPollingBot {
         }
         var message = update.getMessage().getText();
         var chatId = update.getMessage().getChatId();
-        switch (message) {
-            case START -> {
-                String userName = update.getMessage().getChat().getUserName();
-                startCommand(chatId, userName);
-            }
+        if (START.equals(message)) {
+            String userName = update.getMessage().getChat().getUserName();
+            startCommand(chatId, userName);
         }
     }
 
