@@ -11,33 +11,33 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class KafkaConsumerService {
-  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
-
-  private final ObjectMapper objectMapper;
-  private final IoTServiceBot ioTServiceBot;
-
-  @KafkaListener(topics = "${topic-to-consume-message}")
-  public void consumeMessage(String message, Acknowledgment acknowledgment) {
-    try {
-      KafkaMessage kafkaMessage = objectMapper.readValue(message, KafkaMessage.class);
-      NotificationDto notificationDto = objectMapper.readValue(kafkaMessage.getMessage(), NotificationDto.class);
-
-      switch (kafkaMessage.getCommand()) {
-        case HIGH_TEMPERATURE -> ioTServiceBot.sendHighTempNotification(notificationDto);
-        case LOW_TEMPERATURE -> ioTServiceBot.sendLowerTempNotification(notificationDto);
-        case EQUAL_TEMPERATURE -> ioTServiceBot.sendEqualTempNotification(notificationDto);
-        default -> LOGGER.error("Not valid command in request");
-      }
-
-
-      acknowledgment.acknowledge();
-    } catch (JsonProcessingException e) {
-      LOGGER.error("Error processing Kafka message: {}", message, e);
-    } catch (Exception e) {
-      LOGGER.error("Unexpected error while processing audit message", e);
-    }
-  }
-}
+//@Service
+//@RequiredArgsConstructor
+//public class KafkaConsumerService {
+//  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
+//
+//  private final ObjectMapper objectMapper;
+//  private final IoTServiceBot ioTServiceBot;
+//
+//  @KafkaListener(topics = "${topic-to-consume-message}")
+//  public void consumeMessage(String message, Acknowledgment acknowledgment) {
+//    try {
+//      KafkaMessage kafkaMessage = objectMapper.readValue(message, KafkaMessage.class);
+//      NotificationDto notificationDto = objectMapper.readValue(kafkaMessage.getMessage(), NotificationDto.class);
+//
+//      switch (kafkaMessage.getCommand()) {
+//        case HIGH_TEMPERATURE -> ioTServiceBot.sendHighTempNotification(notificationDto);
+//        case LOW_TEMPERATURE -> ioTServiceBot.sendLowerTempNotification(notificationDto);
+//        case EQUAL_TEMPERATURE -> ioTServiceBot.sendEqualTempNotification(notificationDto);
+//        default -> LOGGER.error("Not valid command in request");
+//      }
+//
+//
+//      acknowledgment.acknowledge();
+//    } catch (JsonProcessingException e) {
+//      LOGGER.error("Error processing Kafka message: {}", message, e);
+//    } catch (Exception e) {
+//      LOGGER.error("Unexpected error while processing audit message", e);
+//    }
+//  }
+//}

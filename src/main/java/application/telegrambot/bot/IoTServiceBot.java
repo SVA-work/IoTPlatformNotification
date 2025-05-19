@@ -80,6 +80,6 @@ public class IoTServiceBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return null;
+        return "MIPTIoTPlatformbot";
     }
 }
